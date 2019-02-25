@@ -1,29 +1,52 @@
 /**
- * 
- * @param {*} $screen 
- * @param {*} options 
+ *
+ * @param {*} $screen
+ * @param {*} options
  */
 function Simon($screen, options) {
-    const colors = ['#f00', '#0f0', '#ff0', '#00f'];
+  /**
+   * Available colors
+   */
+  const colors = ["#f00", "#0f0", "#ff0", "#00f"];
 
-    function run() {
-        let i = 0;
-        const interval = setInterval(function () {
-            const color = colors[i];
+  let sequence = [];
 
-            if (!color) {
-                clearInterval(interval);
-                return;
-            }
+  /**
+   * Prepare the game for the given level
+   * @param {number} level
+   */
+  function goToLevel(level) {
+    for (let i = sequence.length; i < level; i++) {
+      const randomIndex = randomInt(colors.length);
+      const color = colors[randomIndex];
+      sequence.push(color);
+    }
+  }
 
-            $screen.style.backgroundColor = color;
-            i++;
-            
-            setTimeout(function() {
-                $screen.style.backgroundColor = 'transparent';
-            }, options.intervalDuration - 200);
-        }, options.intervalDuration);
-    };
-    // Run the game
-    run();
-};
+  function goToNextLevel() {
+      goToLevel(sequence.length + 1);
+  }
+
+  function run() {
+    let i = 0;
+    const interval = setInterval(function() {
+      const color = sequence[i];
+
+      if (!color) {
+        clearInterval(interval);
+        return;
+      }
+
+      $screen.style.backgroundColor = color;
+      i++;
+
+      setTimeout(function() {
+        $screen.style.backgroundColor = "#fff";
+      }, options.intervalDuration - 200);
+    }, options.intervalDuration);
+  }
+
+  goToLevel(100);
+  // Run the game
+  run();
+}
