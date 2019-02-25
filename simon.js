@@ -13,6 +13,10 @@ function Simon($screen) {
 
             $screen.style.backgroundColor = color;
             i++;
+            
+            setTimeout(function() {
+                $screen.style.backgroundColor = 'transparent';
+            }, 800);
         }, 1000);
     };
     // Run the game
