@@ -1,4 +1,9 @@
-function Simon($screen) {
+/**
+ * 
+ * @param {*} $screen 
+ * @param {*} options 
+ */
+function Simon($screen, options) {
     const colors = ['#f00', '#0f0', '#ff0', '#00f'];
 
     function run() {
@@ -16,8 +21,8 @@ function Simon($screen) {
             
             setTimeout(function() {
                 $screen.style.backgroundColor = 'transparent';
-            }, 800);
-        }, 1000);
+            }, options.intervalDuration - 200);
+        }, options.intervalDuration);
     };
     // Run the game
     run();
