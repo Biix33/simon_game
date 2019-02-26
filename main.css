@@ -18,3 +18,45 @@
     transition: background-color 0.3s ease;
 }
 
+#btns {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 512px;
+  height: 128px;
+  background: linear-gradient(#aaa, #fff, #aaa);
+}
+
+.btn-circle {
+  margin: auto 20px;
+  height: 74px;
+  width: 74px;
+  border: none;
+  border-radius: 50%;
+  background-color: #fff;
+  text-align: center;
+  transition: height 0.3s, width 0.3s, transform 0.3s;
+}
+
+.btn-circle:hover {
+  height: 78px;
+  width: 78px;
+  box-shadow: 1px 1px 8px 2px #777;
+  transform: rotate(-90deg);
+}
+
+#red {
+  background-color: #f00;
+}
+
+#green {
+  background-color: #0f0;
+}
+
+#yellow {
+  background-color: #ff0;
+}
+
+#blue {
+  background-color: #00f;
+}

@@ -11,6 +11,8 @@ function Simon($screen, options) {
 
   let sequence = [];
 
+  let playerAnswers = [];
+
   /**
    * Prepare the game for the given level
    * @param {number} level
@@ -25,6 +27,25 @@ function Simon($screen, options) {
 
   function goToNextLevel() {
     goToLevel(sequence.length + 1);
+    playerAnswers = [];
+  }
+
+  function registerAnswers(answer) {
+    if (!colors.includes(answer)) {
+      console.error("Invalid colros, answer ignored");
+      return;
+    }
+
+    if (sequence.length === 0) {
+      console.error("Le jeu n'a pas démarré");
+      return;
+    }
+
+    if (playerAnswers.length === sequence.length) {
+      console.error("Vous avez déjà joué, du calme !");
+      return;
+    }
+    playerAnswers.push(answer);
   }
 
   function run() {
@@ -48,8 +69,9 @@ function Simon($screen, options) {
 
   return {
     play: function() {
-        goToNextLevel();
-        run();
+      goToNextLevel();
+      run();
     },
+    addAnswer: registerAnswers
   };
 }
