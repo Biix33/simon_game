@@ -24,7 +24,7 @@ function Simon($screen, options) {
   }
 
   function goToNextLevel() {
-      goToLevel(sequence.length + 1);
+    goToLevel(sequence.length + 1);
   }
 
   function run() {
@@ -46,7 +46,10 @@ function Simon($screen, options) {
     }, options.intervalDuration);
   }
 
-  goToLevel(100);
-  // Run the game
-  run();
+  return {
+    play: function() {
+        goToNextLevel();
+        run();
+    },
+  };
 }
