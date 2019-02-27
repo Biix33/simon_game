@@ -19,6 +19,10 @@ function Simon($screen, options) {
    * @param {number} level
    */
   function goToLevel(level) {
+    if (level < 1) {
+      level = 1;
+    }
+
     for (let i = sequence.length; i < level; i++) {
       const randomIndex = randomInt(colors.length);
       const color = colors[randomIndex];
@@ -34,13 +38,15 @@ function Simon($screen, options) {
   }
 
   function registerAnswers(answer) {
-    if (!colors.includes(answer)) {
-      console.error("Invalid colros, answer ignored");
-      return;
-    }
+    if (!isRunning) return;
 
     if (sequence.length === 0) {
       console.error("Le jeu n'a pas démarré");
+      return;
+    }
+
+    if (!colors.includes(answer)) {
+      console.error("Invalid colors, answer ignored");
       return;
     }
 
@@ -65,14 +71,13 @@ function Simon($screen, options) {
   }
 
   function run() {
-    isRunning = true;
-
     let i = 0;
     const interval = setInterval(function() {
       const color = sequence[i];
 
       if (!color) {
         clearInterval(interval);
+        isRunning = true;
         return;
       }
 
@@ -88,7 +93,7 @@ function Simon($screen, options) {
   function levelComplete() {
     goToNextLevel();
     if (confirm("Good Job :) Niveau suivant ?")) {
-        run();
+      run();
     }
   }
 
@@ -105,6 +110,8 @@ function Simon($screen, options) {
       if (isRunning) return;
       run();
     },
-    addAnswer: registerAnswers
+    addAnswer: function(color) {
+      if (isRunning) registerAnswers(color);
+    }
   };
 }
