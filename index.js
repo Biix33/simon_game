@@ -1,14 +1,14 @@
 document.addEventListener('DOMContentLoaded', function () {
     console.log('DOM Ready');
     const $screen = document.querySelector('#screen'); 
-    const $playBtn = document.querySelector('#play');
+    const $startBtn = document.querySelector('#start');
     const $btns = document.querySelectorAll(".btn-circle");  
     
     const game = new Simon($screen, {
         intervalDuration: 1000
     });
 
-    $playBtn.addEventListener('click', function() {
+    $startBtn.addEventListener('click', function() {
         game.play();
     });
 

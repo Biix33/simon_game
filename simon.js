@@ -8,6 +8,7 @@ function Simon($screen, options) {
    * Available colors
    */
   const colors = ["#f00", "#0f0", "#ff0", "#00f"];
+  let isRunning = false;
 
   let sequence = [];
 
@@ -23,11 +24,13 @@ function Simon($screen, options) {
       const color = colors[randomIndex];
       sequence.push(color);
     }
+
+    playerAnswers = [];
+    isRunning = false;
   }
 
   function goToNextLevel() {
     goToLevel(sequence.length + 1);
-    playerAnswers = [];
   }
 
   function registerAnswers(answer) {
@@ -45,10 +48,25 @@ function Simon($screen, options) {
       console.error("Vous avez déjà joué, du calme !");
       return;
     }
+    // On la valide la réponse
+    const currentIndex = playerAnswers.length;
+    const solution = sequence[currentIndex];
+
+    if (solution !== answer) {
+      gameOver();
+      return;
+    }
+
     playerAnswers.push(answer);
+
+    if (playerAnswers.length === sequence.length) {
+      goToNextLevel();
+    }
   }
 
   function run() {
+    isRunning = true;
+
     let i = 0;
     const interval = setInterval(function() {
       const color = sequence[i];
@@ -67,9 +85,18 @@ function Simon($screen, options) {
     }, options.intervalDuration);
   }
 
+  function gameOver() {
+    alert("Loooooooser !");
+    sequence = [];
+    goToLevel(1);
+  }
+  goToNextLevel();
+
   return {
     play: function() {
-      goToNextLevel();
+      if (isRunning) return;
+
+     
       run();
     },
     addAnswer: registerAnswers
