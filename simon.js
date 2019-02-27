@@ -60,7 +60,7 @@ function Simon($screen, options) {
     playerAnswers.push(answer);
 
     if (playerAnswers.length === sequence.length) {
-      goToNextLevel();
+      levelComplete();
     }
   }
 
@@ -85,18 +85,24 @@ function Simon($screen, options) {
     }, options.intervalDuration);
   }
 
+  function levelComplete() {
+    goToNextLevel();
+    if (confirm("Good Job :) Niveau suivant ?")) {
+        run();
+    }
+  }
+
   function gameOver() {
     alert("Loooooooser !");
     sequence = [];
     goToLevel(1);
   }
+
   goToNextLevel();
 
   return {
     play: function() {
       if (isRunning) return;
-
-     
       run();
     },
     addAnswer: registerAnswers
