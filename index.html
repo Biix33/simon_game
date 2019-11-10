@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Simon git</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Simon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="utils.js"></script>
     <script src="simon.js"></script>
     <script src="index.js"></script>
-</head>
-<body>
-    <div id="screen-box">
+  </head>
+  <body>
+    <div class="container">
+      <div id="screen-box">
         <div id="screen"></div>
         <button id="start">START</button>
         <button id="break">PAUSE</button>
+      </div>
+
+      <div id="btns">
+        <button class="btn-circle red" data-color="#f00">rouge</button>
+        <button class="btn-circle green" data-color="#0f0">vert</button>
+        <button class="btn-circle yellow" data-color="#ff0">jaune</button>
+        <button class="btn-circle blue" data-color="#00f">bleu</button>
+      </div>
     </div>
-    
-    <div id="btns">
-        <button class="btn-circle" id="red" data-color="#f00">rouge</button>
-        <button class="btn-circle" id="green" data-color="#0f0">vert</button>
-        <button class="btn-circle" id="yellow" data-color="#ff0">jaune</button>
-        <button class="btn-circle" id="blue" data-color="#00f">bleu</button>
-    </div>
-</body>
+  </body>
 </html>

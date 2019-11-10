@@ -1,29 +1,30 @@
 /**
  *
  * @param {*} $screen
- * @param {*} options
+ * @param {Object} options
  */
 function Simon($screen, options) {
   /**
    * Available colors
    */
-  const colors = ["#f00", "#0f0", "#ff0", "#00f"];
+  const colors = options.colors || ["#f00", "#0f0", "#ff0", "#00f"];
   let isRunning = false;
 
   let sequence = [];
 
   let playerAnswers = [];
 
+  let defaultlevel = options.level;
+
   /**
    * Prepare the game for the given level
-   * @param {number} level
    */
-  function goToLevel(level) {
-    if (level < 1) {
-      level = 1;
+  function goToLevel() {
+    if (defaultlevel === null || options.level === null) {
+      defaultlevel = 1;
     }
 
-    for (let i = sequence.length; i < level; i++) {
+    for (let i = sequence.length; i < defaultlevel; i++) {
       const randomIndex = randomInt(colors.length);
       const color = colors[randomIndex];
       sequence.push(color);
@@ -34,15 +35,15 @@ function Simon($screen, options) {
   }
 
   function goToNextLevel() {
-    goToLevel(sequence.length + 1);
+    defaultlevel++;
+    goToLevel();
   }
 
   function registerAnswers(answer) {
     if (!isRunning) return;
 
     if (sequence.length === 0) {
-      console.error("Le jeu n'a pas démarré");
-      return;
+      throw new Error("Le jeu n'a pas démarré");
     }
 
     if (!colors.includes(answer)) {
@@ -71,6 +72,8 @@ function Simon($screen, options) {
   }
 
   function run() {
+    isRunning = true;
+    
     let i = 0;
     const interval = setInterval(function() {
       const color = sequence[i];
@@ -82,28 +85,34 @@ function Simon($screen, options) {
       }
 
       $screen.style.backgroundColor = color;
+      $screen.textContent = "";
       i++;
 
       setTimeout(function() {
-        $screen.style.backgroundColor = "#fff";
-      }, options.intervalDuration - 200);
+        $screen.style.backgroundColor = "#1d1d1d";
+      }, options.intervalDuration - (options.intervalDuration * 0.2));
     }, options.intervalDuration);
+
+    $screen.innerHTML = `<p>Niveau ${defaultlevel}</p>`;
   }
 
   function levelComplete() {
     goToNextLevel();
-    if (confirm("Good Job :) Niveau suivant ?")) {
+    if (confirm(`Good Job :) Niveau suivant ${defaultlevel} ?`)) {
+      localStorage.setItem("curentLevel", defaultlevel);
       run();
     }
   }
 
   function gameOver() {
-    alert("Loooooooser !");
+    $screen.innerHTML = "<p>Game over &#128540; !</p>";
     sequence = [];
-    goToLevel(1);
+    defaultlevel = options.level;
+    localStorage.setItem("curentLevel", options.level);
+    goToLevel();
   }
 
-  goToNextLevel();
+  goToLevel();
 
   return {
     play: function() {
@@ -112,6 +121,6 @@ function Simon($screen, options) {
     },
     addAnswer: function(color) {
       if (isRunning) registerAnswers(color);
-    }
+    },
   };
 }
