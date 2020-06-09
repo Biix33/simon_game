@@ -16,3 +16,5 @@ A simple game written in JavaScript.
 - Player can have a nickname
 - Player can choose the starting level
 - Developer should be able to define non primary colors (use instead)
+
+https://appjs-simon-yb.netlify.com
